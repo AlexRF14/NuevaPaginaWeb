@@ -12,8 +12,8 @@
                 const respuesta = await fetch('/usuarios');
                 const datos = await respuesta.json();
 
-                const contenedor = document.getElementById("lista-usuarios");
-                contenedor.innerHTML = ""; // Limpia el contenido anterior
+                const contenedor = document.getElementById("listaUsuarios");
+                contenedor.innerHTML = "";
 
                 datos.forEach(usuario => {
                     const item = document.createElement("li");
