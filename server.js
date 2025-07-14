@@ -6,7 +6,7 @@ const PORT = 3000;
 
 // URL y nombre de la base de datos
 const MONGO_URL = 'mongodb://localhost:27017';
-const DB_NAME = 'cdIfDB';
+const DB_NAME = 'cdlfDB';
 const COLLECTION = 'usuarios';
 
 let db;
@@ -22,11 +22,16 @@ app.get('/', (req, res) => {
 // Endpoint para obtener usuarios desde MongoDB
 app.get('/usuarios', async (req, res) => {
     try {
-        const usuarios = await db.collection(COLLECTION).find({}).toArray();
+        //const db = client.db(DB_NAME);
+        const usuarios = await db.collection(COLLECTION)
+            .find({}, { projection: { nombre: 1, edad: 1, _id: 0 } })
+            .toArray();
+
+        console.log("Usuarios encontrados:", usuarios);  // Debug
         res.json(usuarios);
     } catch (error) {
-        console.error('Error al obtener usuarios:', error);
-        res.status(500).json({ error: 'Error en el servidor' });
+        console.error("Error al obtener usuarios:", error);
+        res.status(500).send("Error al consultar usuarios");
     }
 });
 

@@ -1,0 +1,10 @@
+{
+  "nombre": "Lars",
+  "edad": 30,
+  "altura": 1.75,
+  "peso": 70,
+  "ubicacion": "Barcelona",
+  "num_relaciones_pasadas": 5,
+  "hobbys": ["fútbol", "lectura", "videojuegos"],
+  "amigos": ["id1", "id2"]
+}

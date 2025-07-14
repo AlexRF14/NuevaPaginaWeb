@@ -8,26 +8,17 @@
                 const parrafo = document.getElementById("respuesta");
                 parrafo.textContent = "¡Acceso concedido! 🎉";
             }
-            function verUsuarios() {
-            fetch('/usuarios')
-                .then(response => response.json())
-                .then(data => {
-                    const lista = document.getElementById("listaUsuarios");
-                    lista.innerHTML = ""; // Limpiar antes de volver a mostrar
+            async function verUsuarios() {
+                const respuesta = await fetch('/usuarios');
+                const datos = await respuesta.json();
 
-                    if (data.length === 0) {
-                        lista.innerHTML = "<li>No hay usuarios disponibles.</li>";
-                        return;
-                    }
+                const contenedor = document.getElementById("lista-usuarios");
+                contenedor.innerHTML = ""; // Limpia el contenido anterior
 
-                    data.forEach(usuario => {
-                        const item = document.createElement("li");
-                        item.textContent = `${usuario.nombre} (${usuario.edad} años) - ${usuario.ubicacion}`;
-                        lista.appendChild(item);
-                    });
-                })
-                .catch(error => {
-                    console.error("Error al obtener usuarios:", error);
+                datos.forEach(usuario => {
+                    const item = document.createElement("li");
+                    item.textContent = `👤 ${usuario.nombre} - ${usuario.edad} años`;
+                    contenedor.appendChild(item);
                 });
             }
         </script>
