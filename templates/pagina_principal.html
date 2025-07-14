@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>pagina_principal</title>
+        <link rel="stylesheet" href="styles.css">
+        <script>
+            function mostrarMensaje() {
+                const parrafo = document.getElementById("respuesta");
+                parrafo.textContent = "¡Acceso concedido! 🎉";
+            }
+            function verUsuarios() {
+            fetch('/usuarios')
+                .then(response => response.json())
+                .then(data => {
+                    const lista = document.getElementById("listaUsuarios");
+                    lista.innerHTML = ""; // Limpiar antes de volver a mostrar
+
+                    if (data.length === 0) {
+                        lista.innerHTML = "<li>No hay usuarios disponibles.</li>";
+                        return;
+                    }
+
+                    data.forEach(usuario => {
+                        const item = document.createElement("li");
+                        item.textContent = `${usuario.nombre} (${usuario.edad} años) - ${usuario.ubicacion}`;
+                        lista.appendChild(item);
+                    });
+                })
+                .catch(error => {
+                    console.error("Error al obtener usuarios:", error);
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Bienvenido a la página principal</h1>
+        <p>Para acceder, pulsa el botón</p>
+
+        <button onclick="mostrarMensaje()">Acceder</button>
+        <p id="respuesta"></p>
+
+        <button onclick="verUsuarios()">Ver usuarios</button>
+        <ul id="listaUsuarios"></ul>
+    </body>
+</html>
