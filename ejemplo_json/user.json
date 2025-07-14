@@ -1,5 +1,6 @@
 {
   "nombre": "Alejandro",
+  "contraseña": 1234,
   "edad": 30,
   "altura": 1.75,
   "peso": 70,
