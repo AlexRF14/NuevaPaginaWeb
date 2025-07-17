@@ -70,34 +70,48 @@
             document.getElementById("formModal").style.display = "none";
         }
 
-        function enviarLogin() {
+          async function enviarLogin() {
             const nombre = document.getElementById("loginNombre").value;
-            const pass = document.getElementById("loginPass").value;
-            
-            // Aquí iría la lógica para enviar los datos al servidor
-            console.log("Login enviado:", {nombre, pass});
-            
-            document.getElementById("logeado").textContent = `¡Sesión iniciada como ${nombre}! 🎉`;
+            const contraseña = document.getElementById("loginPass").value;
+            try {
+            const res = await fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nombre, contraseña })
+            });
+            if (!res.ok) throw new Error(await res.text());
+            const texto = await res.text();
+            document.getElementById("logeado").textContent = texto;
+            } catch (err) {
+            document.getElementById("logeado").textContent = `❌ ${err.message}`;
+            }
             cerrarModal();
         }
 
-        function enviarRegistro() {
+        async function enviarRegistro() {
             const usuario = {
-                nombre: document.getElementById("regNombre").value,
-                contraseña: document.getElementById("regPass").value,
-                edad: parseInt(document.getElementById("regEdad").value),
-                altura: parseFloat(document.getElementById("regAltura").value),
-                peso: parseInt(document.getElementById("regPeso").value),
-                ubicacion: document.getElementById("regUbicacion").value,
-                num_relaciones_pasadas: parseInt(document.getElementById("regRelaciones").value),
-                hobbys: document.getElementById("regHobbies").value.split(',').map(h => h.trim()),
-                amigos: [] // Inicialmente sin amigos
+            nombre: document.getElementById("regNombre").value,
+            contraseña: document.getElementById("regPass").value,
+            edad: parseInt(document.getElementById("regEdad").value),
+            altura: parseFloat(document.getElementById("regAltura").value),
+            peso: parseInt(document.getElementById("regPeso").value),
+            ubicacion: document.getElementById("regUbicacion").value,
+            num_relaciones_pasadas: parseInt(document.getElementById("regRelaciones").value),
+            hobbys: document.getElementById("regHobbies").value.split(',').map(h => h.trim()),
+            amigos: []
             };
-            
-            // Aquí iría la lógica para enviar los datos al servidor
-            console.log("Registro enviado:", usuario);
-            
-            document.getElementById("registrado").textContent = `¡Usuario ${usuario.nombre} registrado! 🎉`;
+            try {
+            const res = await fetch('/registro', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(usuario)
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || 'Error al registrar');
+            document.getElementById("registrado").textContent = data.message;
+            } catch (err) {
+            document.getElementById("registrado").textContent = `❌ ${err.message}`;
+            }
             cerrarModal();
         }
 
