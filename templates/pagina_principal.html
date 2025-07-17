@@ -134,16 +134,17 @@
         <div class="background">
             <h1>Bienvenido a la página principal</h1>
             <p>Para acceder, pulsar alguna de las opciones</p>
-
-            <button onclick="abrirFormulario('login')">Iniciar Sesion</button>
-            <p id="logeado"></p>
-
-            <button onclick="abrirFormulario('register')">Registrarse</button>
-            <p id="registrado"></p>
-
-            <button onclick="verUsuarios()">Ver usuarios</button>
-            <ul id="listaUsuarios"></ul>
         </div>
+
+        <div class="botonera">
+            <button onclick="abrirFormulario('login')">Iniciar Sesión</button>
+            <button onclick="abrirFormulario('register')">Registrarse</button>
+            <button onclick="verUsuarios()">Ver usuarios</button>
+        </div>
+
+        <p id="logeado"></p>
+        <p id="registrado"></p>
+        <ul id="listaUsuarios"></ul>
 
         <div id="formModal" class="modal">
             <div class="modal-content" id="modalContent">
