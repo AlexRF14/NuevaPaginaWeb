@@ -10,6 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Ruta estática
 app.use(express.static(path.join(__dirname, 'templates')));
+app.use('/photos', express.static(path.join(__dirname, 'photos')));
 
 // Conexión a MongoDB
 const MONGO_URL = 'mongodb://localhost:27017';

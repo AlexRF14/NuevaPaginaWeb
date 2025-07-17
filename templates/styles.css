@@ -107,3 +107,14 @@ button {
   flex-direction: column;
   max-width: 200px;
 }
+
+.imagen-bienvenida {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.imagen-bienvenida img {
+  max-width: 300px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
