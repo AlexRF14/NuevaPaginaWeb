@@ -82,6 +82,7 @@
             if (!res.ok) throw new Error(await res.text());
             const texto = await res.text();
             document.getElementById("logeado").textContent = texto;
+            window.location.href = "/pagina.html";
             } catch (err) {
             document.getElementById("logeado").textContent = `❌ ${err.message}`;
             }
