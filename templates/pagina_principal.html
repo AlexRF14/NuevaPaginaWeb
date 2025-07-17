@@ -4,11 +4,104 @@
         <title>pagina_principal</title>
         <link rel="stylesheet" href="styles.css">
         <script>
-            function mostrarMensaje() {
-                const parrafo = document.getElementById("respuesta");
-                parrafo.textContent = "¡Acceso concedido! 🎉";
+            function abrirFormulario(tipo) {
+            const modal = document.getElementById("formModal");
+            const modalContent = document.getElementById("modalContent");
+            
+            if (tipo === 'login') {
+                modalContent.innerHTML = `
+                    <h2>Iniciar Sesión</h2>
+                    <div class="form-group">
+                        <label>Nombre:</label>
+                        <input type="text" id="loginNombre">
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña:</label>
+                        <input type="password" id="loginPass">
+                    </div>
+                    <button onclick="enviarLogin()">Iniciar Sesión</button>
+                    <button onclick="cerrarModal()">Cancelar</button>
+                `;
+            } 
+            else if (tipo === 'register') {
+                modalContent.innerHTML = `
+                    <h2>Registro</h2>
+                    <div class="form-group">
+                        <label>Nombre:</label>
+                        <input type="text" id="regNombre">
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña:</label>
+                        <input type="password" id="regPass">
+                    </div>
+                    <div class="form-group">
+                        <label>Edad:</label>
+                        <input type="number" id="regEdad">
+                    </div>
+                    <div class="form-group">
+                        <label>Altura (m):</label>
+                        <input type="number" step="0.01" id="regAltura">
+                    </div>
+                    <div class="form-group">
+                        <label>Peso (kg):</label>
+                        <input type="number" id="regPeso">
+                    </div>
+                    <div class="form-group">
+                        <label>Ubicación:</label>
+                        <input type="text" id="regUbicacion">
+                    </div>
+                    <div class="form-group">
+                        <label>Número de relaciones pasadas:</label>
+                        <input type="number" id="regRelaciones">
+                    </div>
+                    <div class="form-group">
+                        <label>Hobbies (separados por comas):</label>
+                        <input type="text" id="regHobbies">
+                    </div>
+                    <button onclick="enviarRegistro()">Registrarse</button>
+                    <button onclick="cerrarModal()">Cancelar</button>
+                `;
             }
-            async function verUsuarios() {
+            
+            modal.style.display = "block";
+        }
+
+        function cerrarModal() {
+            document.getElementById("formModal").style.display = "none";
+        }
+
+        function enviarLogin() {
+            const nombre = document.getElementById("loginNombre").value;
+            const pass = document.getElementById("loginPass").value;
+            
+            // Aquí iría la lógica para enviar los datos al servidor
+            console.log("Login enviado:", {nombre, pass});
+            
+            document.getElementById("logeado").textContent = `¡Sesión iniciada como ${nombre}! 🎉`;
+            cerrarModal();
+        }
+
+        function enviarRegistro() {
+            const usuario = {
+                nombre: document.getElementById("regNombre").value,
+                contraseña: document.getElementById("regPass").value,
+                edad: parseInt(document.getElementById("regEdad").value),
+                altura: parseFloat(document.getElementById("regAltura").value),
+                peso: parseInt(document.getElementById("regPeso").value),
+                ubicacion: document.getElementById("regUbicacion").value,
+                num_relaciones_pasadas: parseInt(document.getElementById("regRelaciones").value),
+                hobbys: document.getElementById("regHobbies").value.split(',').map(h => h.trim()),
+                amigos: [] // Inicialmente sin amigos
+            };
+            
+            // Aquí iría la lógica para enviar los datos al servidor
+            console.log("Registro enviado:", usuario);
+            
+            document.getElementById("registrado").textContent = `¡Usuario ${usuario.nombre} registrado! 🎉`;
+            cerrarModal();
+        }
+
+            async function verUsuarios(){
                 const respuesta = await fetch('/usuarios');
                 const datos = await respuesta.json();
 
@@ -24,13 +117,26 @@
         </script>
     </head>
     <body>
-        <h1>Bienvenido a la página principal</h1>
-        <p>Para acceder, pulsa el botón</p>
+        <div class="background">
+            <h1>Bienvenido a la página principal</h1>
+            <p>Para acceder, pulsar alguna de las opciones</p>
 
-        <button onclick="mostrarMensaje()">Acceder</button>
-        <p id="respuesta"></p>
+            <button onclick="abrirFormulario('login')">Iniciar Sesion</button>
+            <p id="logeado"></p>
 
-        <button onclick="verUsuarios()">Ver usuarios</button>
-        <ul id="listaUsuarios"></ul>
+            <button onclick="abrirFormulario('register')">Registrarse</button>
+            <p id="registrado"></p>
+
+            <button onclick="verUsuarios()">Ver usuarios</button>
+            <ul id="listaUsuarios"></ul>
+        </div>
+
+        <div id="formModal" class="modal">
+            <div class="modal-content" id="modalContent">
+
+            </div>
+        </div>
+
+
     </body>
 </html>
