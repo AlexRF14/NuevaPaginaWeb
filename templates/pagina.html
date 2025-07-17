@@ -4,4 +4,30 @@
         <link rel="stylesheet" href="styles.css">
         <h1>Sesión Iniciada</h1>
     </head>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById("menuDesplegable");
+            menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+        }
+
+        window.addEventListener("click", function(event) {
+            const menu = document.getElementById("menuDesplegable");
+            const icon = document.querySelector(".menu-icon");
+            if (!menu.contains(event.target) && event.target !== icon) {
+            menu.style.display = "none";
+            }
+        });
+    </script>
+
+    <div class="menu-container">
+    <img src="/photos/corazon.png" alt="Menú" class="menu-icon" onclick="toggleMenu()">
+    <div id="menuDesplegable" class="menu-desplegable">
+        <a href="#">Inicio</a>
+        <a href="#">Perfil</a>
+        <a href="#">Configuración</a>
+        <a href="#">Cerrar sesión</a>
+    </div>
+    </div>
+
 </html>
